@@ -9,34 +9,50 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        tinyfish: {
-          50: '#fff5f2',
-          100: '#ffe8e1',
-          200: '#ffd3c4',
-          300: '#ffb299',
-          400: '#ff8261',
-          500: '#f5572b',
-          600: '#d74b28',
-          700: '#b83818',
-          800: '#922f17',
-          900: '#752b18',
-          950: '#401309',
+        brand: {
+          50: '#fff7ed',
+          100: '#ffedd5',
+          200: '#fed7aa',
+          300: '#fdba74',
+          400: '#fb923c',
+          500: '#f97316',
+          600: '#ea580c',
+          700: '#c2410c',
+          800: '#9a3412',
+          900: '#7c2d12',
+          950: '#431407',
         },
-        dark: {
-          950: '#090a0f',
-          900: '#0f111a',
-          850: '#141824',
-          800: '#1a1f30',
-          700: '#262d45',
-          600: '#343c5b',
-        }
+        sarvam: {
+          bg: '#FAFAF8',
+          card: '#FFFFFF',
+          border: '#E7E5E4',
+          text: '#1C1917',
+          muted: '#78716C',
+          terracotta: '#D9531E',
+          sand: '#F5F5F0',
+        },
+        tinyfish: {
+          50: '#fff7ed',
+          100: '#ffedd5',
+          200: '#fed7aa',
+          300: '#fdba74',
+          400: '#fb923c',
+          500: '#f97316',
+          600: '#ea580c',
+          700: '#c2410c',
+          800: '#9a3412',
+          900: '#7c2d12',
+          950: '#431407',
+        },
       },
       fontFamily: {
+        sans: ['Plus Jakarta Sans', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
         mono: ['JetBrains Mono', 'Menlo', 'monospace'],
       },
-      animation: {
-        'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'spin-slow': 'spin 8s linear infinite',
+      boxShadow: {
+        'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.06)',
+        'lifted': '0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.06)',
       }
     },
   },

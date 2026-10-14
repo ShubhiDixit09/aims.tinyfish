@@ -62,8 +62,8 @@ export function CitizenVoiceAssistant({
       recognition.onresult = (event: any) => {
         const transcript = event.results[0][0].transcript;
         setInputText(transcript);
-        handleSendQuery(transcript);
         setIsListening(false);
+        handleSendQuery(transcript);
       };
 
       recognition.onerror = () => {
@@ -75,15 +75,16 @@ export function CitizenVoiceAssistant({
       };
 
       recognition.start();
-    } catch (e) {
+    } catch {
       setIsListening(false);
     }
   };
 
+  // Text-To-Speech (TTS)
   const speakText = (text: string) => {
     if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel();
 
+    window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = languageMode === 'hindi' ? 'hi-IN' : 'en-IN';
     utterance.rate = 1.0;
@@ -95,161 +96,178 @@ export function CitizenVoiceAssistant({
     window.speechSynthesis.speak(utterance);
   };
 
-  const handleSendQuery = (queryToSend?: string) => {
-    const q = (queryToSend || inputText).trim();
-    if (!q) return;
+  const handleSendQuery = (customText?: string) => {
+    const query = (customText || inputText).trim();
+    if (!query) return;
 
-    const userMsg: ChatMessage = { sender: 'user', text: q };
+    // Append User Message
+    const userMsg: ChatMessage = { sender: 'user', text: query };
     setMessages((prev) => [...prev, userMsg]);
     setInputText('');
 
-    const lower = q.toLowerCase();
+    // Rule-based Intelligent Citizen Copilot Routing
+    const lower = query.toLowerCase();
 
-    // Contextual Citizen Logic
     setTimeout(() => {
-      let aiReply = '';
-      let actionTag = '';
+      let reply: ChatMessage;
 
-      if (lower.includes('income') || lower.includes('certificate') || lower.includes('edistrict') || lower.includes('delhi')) {
-        aiReply =
-          'Delhi Income Certificate ke liye Revenue Department ko 4 mandatory documents chahiye: 1) Aadhaar Card, 2) Residence Proof (3 saal), 3) Salary Slip ya ITR, aur 4) Annexure-I Self-Declaration Affidavit. Sabhi files strict 100KB se kam honi chahiye. Maine aapke workspace mein checklist load kar di hai!';
-        onSelectServiceIntent('edistrict-income');
-        actionTag = 'DELHI_EDISTRICT_LOADED';
-      } else if (lower.includes('check') || lower.includes('document') || lower.includes('size') || lower.includes('pdf')) {
-        aiReply =
-          'Main aapke uploaded documents ki size aur name consistency audit kar raha hoon. Delhi portal par 100KB se badi file upload nahi hoti. Document Checker panel mein live report dekhein!';
-        onTriggerDocumentCheck();
-        actionTag = 'DOCUMENT_CHECK_TRIGGERED';
-      } else if (lower.includes('affidavit') || lower.includes('annexure') || lower.includes('declaration')) {
-        aiReply =
-          'Maine aapke naam (Rahul Sharma) aur income details ke saath official Annexure-I Self-Declaration Affidavit draft taiyyar kar diya hai. Aap ise 1-click mein copy ya download kar sakte hain.';
-        onGenerateAffidavit();
-        actionTag = 'AFFIDAVIT_GENERATED';
+      if (lower.includes('income') || lower.includes('aay') || lower.includes('certificate') || lower.includes('edistrict')) {
+        reply = {
+          sender: 'ai',
+          text: 'Delhi e-District par Income Certificate ke liye 4 cheezein chahiye: 1) Aadhaar Card, 2) Salary Slip ya ITR, 3) BSES Bijli ka bill (3 saal ka proof), aur 4) Annexure-I Self-Declaration Affidavit. Sabhi files 100KB se kam honi chahiye.',
+          hindiTranslation: 'दिल्ली ई-डिस्ट्रिक्ट आय प्रमाण पत्र के लिए 4 दस्तावेज़ आवश्यक हैं: आधार कार्ड, वेतन पर्ची/आईटीआर, 3 वर्ष का बिजली बिल, और अनुलग्नक-I स्व-घोषणा पत्र। सभी फाइलें 100KB से कम होनी चाहिए।',
+          actionTag: 'DOC_CHECK',
+        };
+        onSelectServiceIntent('edistrict-income', query);
+      } else if (lower.includes('affidavit') || lower.includes('declaration') || lower.includes('annexure')) {
+        reply = {
+          sender: 'ai',
+          text: 'Maine aapka prescribed Annexure-I Self-Declaration Affidavit draft kar diya hai. Aap "Preview Affidavit" par click karke verify aur download kar sakte hain.',
+          hindiTranslation: 'मैंने आपका अनुलग्नक-I स्व-घोषणा पत्र तैयार कर दिया है। आप इसे तुरंत पूर्वावलोकन और डाउनलोड कर सकते हैं।',
+          actionTag: 'AFFIDAVIT',
+        };
       } else if (lower.includes('passport')) {
-        aiReply =
-          'Passport Seva portal par Normal Fresh Passport ke liye Proof of DOB, Address Proof aur Non-ECR certificate chahiye. Online steps ke baad Passport Seva Kendra (PSK) appointment book hoti hai.';
-        onSelectServiceIntent('passport-seva');
-        actionTag = 'PASSPORT_SEVA_LOADED';
+        reply = {
+          sender: 'ai',
+          text: 'Passport Seva ke liye aapko Proof of Date of Birth (Birth Certificate/10th Marksheet), Address Proof (Aadhaar/Voter ID), aur Non-ECR status document chahiye.',
+          actionTag: 'PASSPORT',
+        };
+        onSelectServiceIntent('passport-seva', query);
       } else {
-        aiReply =
-          'Main samajh gaya. TinyFish browser agent live official government portal par jaakar exact checklist aur form steps inspect kar raha hai. Aap document upload karein, baaki process hum automate karenge.';
-        actionTag = 'PORTAL_STANDBY';
+        reply = {
+          sender: 'ai',
+          text: `Aapke request "${query}" ke liye maine relevant government guidelines inspect kar li hain. Kya aap document audit run karna chahte hain?`,
+        };
       }
 
-      const aiMsg: ChatMessage = { sender: 'ai', text: aiReply, actionTag };
-      setMessages((prev) => [...prev, aiMsg]);
-      speakText(aiReply);
+      setMessages((prev) => [...prev, reply]);
+      speakText(reply.text);
     }, 400);
   };
 
   return (
-    <div className="bg-dark-900 border border-dark-800 rounded-2xl overflow-hidden shadow-xl flex flex-col h-[400px]">
-      {/* Voice Assistant Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-dark-850 border-b border-dark-800">
-        <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-tinyfish-600/20 text-tinyfish-400">
+    <div className="bg-white border border-stone-200/90 rounded-2xl p-6 shadow-card flex flex-col space-y-4">
+      {/* Header with Language Toggles */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-stone-100">
+        <div className="flex items-center gap-2.5">
+          <div className="p-2 rounded-xl bg-stone-100 border border-stone-200 text-stone-800 shadow-sm">
             <Bot className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-xs font-bold text-white flex items-center gap-1.5">
-              Citizen Corner • Multilingual Voice Copilot
-              {isSpeaking && (
-                <span className="text-[10px] text-emerald-400 flex items-center gap-1 font-mono">
-                  <Volume2 className="w-3 h-3 animate-pulse" /> Speaking
-                </span>
-              )}
+            <h3 className="text-sm font-bold text-stone-900">
+              CivicPilot Indic Voice & Chat Copilot
             </h3>
-            <span className="text-[10px] text-slate-400">Hindi • English • Hinglish</span>
+            <p className="text-xs text-stone-500">
+              Real-time conversational guidance in Hinglish, Hindi, and English
+            </p>
           </div>
         </div>
 
-        {/* Language Mode Toggle */}
-        <div className="flex items-center gap-1 bg-dark-950 p-1 rounded-lg border border-dark-800 text-[10px] font-mono">
-          <Languages className="w-3 h-3 text-slate-500 ml-1" />
-          <button
-            onClick={() => setLanguageMode('hinglish')}
-            className={`px-2 py-0.5 rounded ${languageMode === 'hinglish' ? 'bg-tinyfish-600 text-white font-bold' : 'text-slate-400'}`}
-          >
-            Hinglish
-          </button>
-          <button
-            onClick={() => setLanguageMode('hindi')}
-            className={`px-2 py-0.5 rounded ${languageMode === 'hindi' ? 'bg-tinyfish-600 text-white font-bold' : 'text-slate-400'}`}
-          >
-            हिंदी
-          </button>
+        {/* Language Pill Switcher */}
+        <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-full border border-stone-200">
+          <Languages className="w-3.5 h-3.5 text-stone-500 ml-1.5" />
+          {(['hinglish', 'hindi', 'english'] as const).map((mode) => (
+            <button
+              key={mode}
+              onClick={() => setLanguageMode(mode)}
+              className={`px-3 py-1 rounded-full text-[11px] font-medium capitalize transition-all ${
+                languageMode === mode
+                  ? 'bg-white text-stone-900 shadow-sm font-semibold'
+                  : 'text-stone-600 hover:text-stone-900'
+              }`}
+            >
+              {mode}
+            </button>
+          ))}
         </div>
       </div>
 
       {/* Chat Messages Log */}
-      <div className="flex-1 p-3.5 overflow-y-auto space-y-3 font-sans text-xs scrollbar-thin scrollbar-thumb-dark-700 bg-dark-950">
-        {messages.map((m, idx) => (
+      <div className="h-64 overflow-y-auto space-y-3 p-1">
+        {messages.map((msg, idx) => (
           <div
             key={idx}
-            className={`flex items-start gap-2.5 ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+            className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
           >
-            {m.sender === 'ai' && (
-              <div className="w-6 h-6 rounded-full bg-tinyfish-600/20 text-tinyfish-400 flex items-center justify-center shrink-0 mt-0.5 border border-tinyfish-500/30">
-                <Bot className="w-3.5 h-3.5" />
-              </div>
-            )}
             <div
-              className={`p-3 rounded-xl max-w-[85%] leading-relaxed ${
-                m.sender === 'user'
-                  ? 'bg-tinyfish-600 text-white shadow-sm'
-                  : 'bg-dark-900 border border-dark-800 text-slate-200 shadow-inner'
+              className={`max-w-[85%] rounded-2xl p-3.5 text-xs ${
+                msg.sender === 'user'
+                  ? 'bg-stone-900 text-white rounded-tr-sm shadow-sm'
+                  : 'bg-stone-50 text-stone-800 rounded-tl-sm border border-stone-200/80 shadow-sm'
               }`}
             >
-              <div>{m.text}</div>
-              {m.actionTag && (
-                <div className="mt-2 pt-1 border-t border-dark-800 text-[10px] font-mono text-tinyfish-400 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" />
-                  Action: {m.actionTag}
+              <div className="leading-relaxed">{msg.text}</div>
+
+              {msg.hindiTranslation && languageMode !== 'english' && (
+                <div className="mt-2 pt-2 border-t border-stone-200/80 text-[11px] text-stone-600 font-sans">
+                  {msg.hindiTranslation}
                 </div>
               )}
+
+              {/* Action Buttons for AI recommendations */}
+              {msg.actionTag === 'DOC_CHECK' && (
+                <button
+                  onClick={onTriggerDocumentCheck}
+                  className="mt-2.5 px-3 py-1 rounded-lg bg-stone-900 text-white font-medium text-[11px] hover:bg-black transition-colors flex items-center gap-1.5"
+                >
+                  <Sparkles className="w-3 h-3 text-amber-400" />
+                  <span>Audit Documents Now</span>
+                </button>
+              )}
+
+              {msg.actionTag === 'AFFIDAVIT' && (
+                <button
+                  onClick={onGenerateAffidavit}
+                  className="mt-2.5 px-3 py-1 rounded-lg bg-stone-900 text-white font-medium text-[11px] hover:bg-black transition-colors flex items-center gap-1.5"
+                >
+                  <Sparkles className="w-3 h-3 text-amber-400" />
+                  <span>Preview Annexure-I Draft</span>
+                </button>
+              )}
             </div>
-            {m.sender === 'user' && (
-              <div className="w-6 h-6 rounded-full bg-dark-800 text-slate-300 flex items-center justify-center shrink-0 mt-0.5">
-                <User className="w-3.5 h-3.5" />
-              </div>
+
+            {msg.sender === 'ai' && (
+              <button
+                onClick={() => speakText(msg.text)}
+                className="mt-1 flex items-center gap-1 text-[10px] text-stone-400 hover:text-stone-700 transition-colors ml-1"
+                title="Speak Out Aloud"
+              >
+                <Volume2 className="w-3 h-3" />
+                <span>Listen</span>
+              </button>
             )}
           </div>
         ))}
       </div>
 
       {/* Suggested Quick Prompts */}
-      <div className="px-3 py-1.5 bg-dark-850/80 border-t border-dark-800 flex gap-1.5 overflow-x-auto text-[11px] whitespace-nowrap scrollbar-none">
-        <button
-          onClick={() => handleSendQuery('Mujhe Delhi mein income certificate apply karna hai. Batao kya chahiye?')}
-          className="px-2.5 py-1 rounded-lg bg-dark-900 hover:bg-dark-800 text-slate-300 border border-dark-700/60"
-        >
-          📜 Delhi Income Certificate apply karna hai
-        </button>
-        <button
-          onClick={() => handleSendQuery('Check my documents for 100KB size limit')}
-          className="px-2.5 py-1 rounded-lg bg-dark-900 hover:bg-dark-800 text-slate-300 border border-dark-700/60"
-        >
-          🔍 Check Document Size Limits
-        </button>
-        <button
-          onClick={() => handleSendQuery('Generate Annexure-1 Self-Declaration Affidavit')}
-          className="px-2.5 py-1 rounded-lg bg-dark-900 hover:bg-dark-800 text-slate-300 border border-dark-700/60"
-        >
-          ✍️ Generate Annexure-I Affidavit
-        </button>
+      <div className="flex flex-wrap gap-1.5 pt-1">
+        {[
+          'Delhi Income Certificate ke documents?',
+          'Oversized PDF ko kaise compress karein?',
+          'Annexure-I affidavit format dikhao',
+        ].map((prompt, i) => (
+          <button
+            key={i}
+            onClick={() => handleSendQuery(prompt)}
+            className="text-[11px] bg-stone-50 hover:bg-stone-100 text-stone-700 px-3 py-1 rounded-full border border-stone-200 transition-colors"
+          >
+            {prompt}
+          </button>
+        ))}
       </div>
 
-      {/* Voice & Text Input Bar */}
-      <div className="p-2.5 bg-dark-850 border-t border-dark-800 flex items-center gap-2">
+      {/* Input Bar with Speech Recognition Mic */}
+      <div className="flex items-center gap-2 pt-2 border-t border-stone-100">
         <button
           type="button"
           onClick={toggleListening}
-          className={`p-2.5 rounded-xl flex items-center justify-center transition-all ${
+          className={`p-3 rounded-full transition-all shadow-sm ${
             isListening
-              ? 'bg-rose-500 text-white animate-pulse shadow-lg shadow-rose-500/30'
-              : 'bg-dark-900 text-tinyfish-400 hover:bg-dark-800 border border-dark-700/80'
+              ? 'bg-amber-600 text-white animate-pulse'
+              : 'bg-stone-900 hover:bg-black text-white'
           }`}
-          title={isListening ? 'Listening... click to stop' : 'Click to Speak (Voice Assistant)'}
+          title={isListening ? 'Listening...' : 'Click to Speak'}
         >
           {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
         </button>
@@ -259,15 +277,19 @@ export function CitizenVoiceAssistant({
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSendQuery()}
-          placeholder={isListening ? 'Sun raha hoon... Boliye' : 'Poochiye ya boliye (e.g. Income certificate process)...'}
-          className="flex-1 px-3 py-2 rounded-xl bg-dark-950 border border-dark-800 text-slate-100 text-xs focus:outline-none focus:border-tinyfish-500"
+          placeholder={
+            isListening
+              ? 'Sun raha hoon... Boliye...'
+              : 'Type or speak in Hindi / Hinglish...'
+          }
+          className="flex-1 bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-stone-900 focus:bg-white transition-all"
         />
 
         <button
           type="button"
           onClick={() => handleSendQuery()}
           disabled={!inputText.trim()}
-          className="p-2.5 rounded-xl bg-tinyfish-600 hover:bg-tinyfish-500 text-white disabled:bg-dark-800 disabled:text-slate-600 transition-colors"
+          className="p-3 rounded-xl bg-stone-900 hover:bg-black text-white transition-colors disabled:opacity-40 shadow-sm"
         >
           <Send className="w-4 h-4" />
         </button>

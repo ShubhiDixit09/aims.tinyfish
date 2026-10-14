@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Eye, ExternalLink, RefreshCw, Maximize2, Minimize2, Radio, Sparkles, Monitor } from 'lucide-react';
+import { ExternalLink, RefreshCw, Maximize2, Minimize2, Radio, Globe, ShieldCheck } from 'lucide-react';
 
 interface BrowserPreviewProps {
   streamingUrl: string | null;
@@ -26,38 +26,41 @@ export function BrowserPreview({
   };
 
   return (
-    <div className={`flex flex-col bg-dark-900 border border-dark-800 rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 ${
-      isFullscreen ? 'fixed inset-4 z-50 bg-dark-950/95 backdrop-blur-xl' : 'h-[620px]'
+    <div className={`flex flex-col bg-white border border-stone-200/90 rounded-2xl overflow-hidden shadow-card transition-all duration-300 ${
+      isFullscreen ? 'fixed inset-4 z-50 bg-white/95 backdrop-blur-xl' : 'h-[620px]'
     }`}>
-      {/* Browser Chrome Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-dark-850 border-b border-dark-800">
+      {/* Clean Browser Chrome Header */}
+      <div className="flex items-center justify-between px-5 py-3 bg-stone-50 border-b border-stone-200">
         
         {/* Window controls */}
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-rose-500/80" />
-          <div className="w-3 h-3 rounded-full bg-amber-500/80" />
-          <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-          <span className="ml-2 text-xs font-mono text-slate-400 flex items-center gap-1.5">
-            <Monitor className="w-3.5 h-3.5 text-tinyfish-400" />
-            TinyFish Cloud Browser
+          <div className="w-2.5 h-2.5 rounded-full bg-rose-400" />
+          <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+          <span className="ml-2 text-xs font-semibold text-stone-700 flex items-center gap-1.5">
+            <Globe className="w-3.5 h-3.5 text-stone-500" />
+            Cloud Browser Viewport
           </span>
         </div>
 
-        {/* URL Bar */}
+        {/* URL Capsule */}
         <div className="flex-1 max-w-md mx-4">
-          <div className="flex items-center gap-2 px-3 py-1 bg-dark-950/80 border border-dark-700/60 rounded-lg text-xs font-mono text-slate-300 truncate">
-            <span className="text-emerald-400 text-[10px]">https://</span>
-            <span className="truncate">{targetUrl ? targetUrl.replace(/^https?:\/\//, '') : 'awaiting-target...'}</span>
+          <div className="flex items-center gap-2 px-3.5 py-1 bg-white border border-stone-200 rounded-full text-xs text-stone-700 shadow-sm truncate">
+            <ShieldCheck className="w-3 h-3 text-emerald-600 shrink-0" />
+            <span className="text-stone-400 text-[11px] font-mono">https://</span>
+            <span className="truncate font-mono font-medium text-stone-800">
+              {targetUrl ? targetUrl.replace(/^https?:\/\//, '') : 'awaiting-portal-url...'}
+            </span>
           </div>
         </div>
 
         {/* Live Indicator & Controls */}
         <div className="flex items-center gap-2">
           {isRunning && (
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-tinyfish-600/20 border border-tinyfish-500/40 text-tinyfish-400 text-xs font-medium animate-pulse">
-              <Radio className="w-3 h-3 animate-spin" />
-              <span>LIVE</span>
-              <span className="ml-1 px-1.5 py-0.2 bg-tinyfish-600 text-white rounded text-[10px] font-mono">
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-semibold">
+              <Radio className="w-3 h-3 text-amber-600 animate-spin" />
+              <span>NAVIGATING</span>
+              <span className="ml-1 px-1.5 py-0.2 bg-stone-900 text-white rounded text-[10px] font-mono">
                 Step {stepCount}
               </span>
             </div>
@@ -66,7 +69,7 @@ export function BrowserPreview({
           {streamingUrl && (
             <button
               onClick={handleRefresh}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-dark-800 transition-colors"
+              className="p-1.5 rounded-lg text-stone-500 hover:text-stone-900 hover:bg-stone-100 transition-colors"
               title="Refresh Stream"
             >
               <RefreshCw className="w-3.5 h-3.5" />
@@ -75,7 +78,7 @@ export function BrowserPreview({
 
           <button
             onClick={() => setIsFullscreen(!isFullscreen)}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-dark-800 transition-colors"
+            className="p-1.5 rounded-lg text-stone-500 hover:text-stone-900 hover:bg-stone-100 transition-colors"
             title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen View'}
           >
             {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
@@ -84,7 +87,7 @@ export function BrowserPreview({
       </div>
 
       {/* Main Viewport Content */}
-      <div className="relative flex-1 bg-dark-950 flex items-center justify-center overflow-hidden">
+      <div className="relative flex-1 bg-stone-100/50 flex items-center justify-center overflow-hidden">
         {streamingUrl ? (
           <iframe
             key={iframeKey}
@@ -96,26 +99,23 @@ export function BrowserPreview({
           />
         ) : (
           <div className="flex flex-col items-center justify-center p-8 text-center max-w-sm">
-            <div className="relative w-20 h-20 mb-6 flex items-center justify-center rounded-2xl bg-gradient-to-tr from-tinyfish-600/20 to-tinyfish-400/10 border border-tinyfish-500/30">
-              <span className="text-4xl filter drop-shadow">🐟</span>
-              {isRunning && (
-                <div className="absolute inset-0 rounded-2xl border-2 border-tinyfish-500 animate-ping opacity-30" />
-              )}
+            <div className="w-16 h-16 mb-5 flex items-center justify-center rounded-2xl bg-white border border-stone-200 shadow-sm text-stone-700">
+              <Globe className="w-8 h-8 text-stone-500" />
             </div>
 
-            <h3 className="text-base font-semibold text-white mb-2">
-              {isRunning ? 'Launching Remote Browser...' : 'Remote Viewport Standby'}
+            <h3 className="text-base font-bold text-stone-900 mb-1.5">
+              {isRunning ? 'Initializing Cloud Browser...' : 'Remote Viewport Standby'}
             </h3>
             
-            <p className="text-xs text-slate-400 leading-relaxed mb-4">
+            <p className="text-xs text-stone-500 leading-relaxed mb-4">
               {isRunning
-                ? 'TinyFish agent is initializing the cloud browser session. The live stream feed will appear here in ~5 seconds.'
-                : 'Select a preset or enter a target URL on the left, then click "Launch Autonomous Mission" to watch TinyFish browse in real time.'}
+                ? 'TinyFish agent is initializing the remote browser session. The 60fps live stream feed will appear here in ~5 seconds.'
+                : 'Select a government service preset on the left and click "Launch Live Autonomous Mission" to watch the agent navigate in real time.'}
             </p>
 
             {currentPurpose && isRunning && (
-              <div className="w-full p-2.5 rounded-lg bg-dark-900 border border-tinyfish-500/30 text-xs font-mono text-tinyfish-300 text-left">
-                <span className="text-slate-400">Action:</span> {currentPurpose}
+              <div className="w-full p-3 rounded-xl bg-white border border-stone-200 text-xs text-stone-700 shadow-sm text-left">
+                <span className="font-semibold text-stone-900">Current Action:</span> {currentPurpose}
               </div>
             )}
           </div>
@@ -123,10 +123,10 @@ export function BrowserPreview({
       </div>
 
       {/* Bottom Status Ticker */}
-      <div className="px-4 py-2 bg-dark-850 border-t border-dark-800 flex items-center justify-between text-xs font-mono text-slate-400">
+      <div className="px-5 py-2.5 bg-stone-50 border-t border-stone-200 flex items-center justify-between text-xs text-stone-600">
         <div className="flex items-center gap-2 truncate">
-          <span className="w-2 h-2 rounded-full bg-emerald-400" />
-          <span className="truncate">
+          <span className={`w-2 h-2 rounded-full ${isRunning ? 'bg-amber-500 animate-pulse' : 'bg-emerald-500'}`} />
+          <span className="truncate font-medium">
             {currentPurpose ? currentPurpose : 'Agent ready for navigation command'}
           </span>
         </div>
@@ -135,9 +135,9 @@ export function BrowserPreview({
             href={streamingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 text-tinyfish-400 hover:text-tinyfish-300 transition-colors ml-2 shrink-0"
+            className="flex items-center gap-1 text-stone-800 hover:text-black font-medium transition-colors ml-2 shrink-0"
           >
-            <span>Direct Stream</span>
+            <span>Direct Viewport</span>
             <ExternalLink className="w-3 h-3" />
           </a>
         )}

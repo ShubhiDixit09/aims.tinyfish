@@ -178,7 +178,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-dark-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-[#FAFAF8] text-stone-900">
       <Header
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -289,8 +289,8 @@ export default function DashboardPage() {
       />
 
       {/* Footer */}
-      <footer className="border-t border-dark-800 py-4 px-6 text-center text-xs font-mono text-slate-500">
-        CivicPilot AI • Built with TinyFish Web Agent Infrastructure • AIMS-DTU BITCAMP 2026 (Track 1: Personal Agents)
+      <footer className="border-t border-stone-200 py-6 px-6 text-center text-xs text-stone-500 bg-white">
+        CivicPilot AI • Sovereign Indic Citizen Agent • Built on TinyFish Infrastructure • AIMS-DTU Hackathon 2026
       </footer>
     </div>
   );

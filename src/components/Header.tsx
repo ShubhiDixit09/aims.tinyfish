@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Compass, Globe, Radio, Sparkles, ShieldCheck, Activity } from 'lucide-react';
+import { Compass, Globe, Radio, Sparkles, ShieldCheck } from 'lucide-react';
 
 interface HeaderProps {
   activeTab: 'citizen' | 'cockpit' | 'search' | 'monitors' | 'research';
@@ -11,35 +11,37 @@ interface HeaderProps {
 
 export function Header({ activeTab, setActiveTab, status }: HeaderProps) {
   return (
-    <header className="border-b border-dark-800 bg-dark-950/80 backdrop-blur-md sticky top-0 z-40 px-4 lg:px-8 py-3 transition-colors">
+    <header className="border-b border-stone-200/90 bg-white/95 backdrop-blur-md sticky top-0 z-40 px-4 lg:px-8 py-3.5 transition-colors">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         
         {/* Brand & Edition */}
         <div className="flex items-center gap-3">
-          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-tinyfish-600 to-tinyfish-400 shadow-lg shadow-tinyfish-600/30">
-            <span className="text-xl select-none">🐟</span>
-            <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-dark-950 animate-pulse" />
+          <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-stone-900 text-white font-bold text-sm shadow-sm">
+            <span>CP</span>
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-lg font-bold tracking-tight text-white flex items-center gap-2">
-                CivicPilot <span className="text-xs px-2 py-0.5 rounded-full bg-tinyfish-600/20 text-tinyfish-400 border border-tinyfish-500/30 font-medium">CIVIC AGENT</span>
+              <h1 className="text-base font-bold tracking-tight text-stone-900">
+                CivicPilot
               </h1>
+              <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200/70">
+                Indic Agent
+              </span>
             </div>
-            <p className="text-xs text-slate-400">
-              Autonomous Citizen Portal & Errand Copilot • <span className="text-tinyfish-400 font-semibold">DTU Track 1: Personal Agents</span>
+            <p className="text-xs text-stone-500">
+              Sovereign Citizen Services & Portal Copilot
             </p>
           </div>
         </div>
 
-        {/* Navigation Tabs */}
-        <nav className="flex items-center bg-dark-900/90 border border-dark-800 p-1 rounded-xl shadow-inner">
+        {/* Navigation Tabs - Sarvam Clean Segmented Pill */}
+        <nav className="flex items-center bg-stone-100 p-1 rounded-full border border-stone-200/80 shadow-inner">
           <button
             onClick={() => setActiveTab('citizen')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
+            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
               activeTab === 'citizen'
-                ? 'bg-tinyfish-600 text-white shadow-md shadow-tinyfish-600/20'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-dark-800/60'
+                ? 'bg-white text-stone-900 shadow-sm font-semibold'
+                : 'text-stone-600 hover:text-stone-900'
             }`}
           >
             <ShieldCheck className="w-3.5 h-3.5" />
@@ -48,10 +50,10 @@ export function Header({ activeTab, setActiveTab, status }: HeaderProps) {
 
           <button
             onClick={() => setActiveTab('cockpit')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
+            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
               activeTab === 'cockpit'
-                ? 'bg-tinyfish-600 text-white shadow-md shadow-tinyfish-600/20'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-dark-800/60'
+                ? 'bg-white text-stone-900 shadow-sm font-semibold'
+                : 'text-stone-600 hover:text-stone-900'
             }`}
           >
             <Radio className="w-3.5 h-3.5" />
@@ -60,22 +62,22 @@ export function Header({ activeTab, setActiveTab, status }: HeaderProps) {
 
           <button
             onClick={() => setActiveTab('search')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
+            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
               activeTab === 'search'
-                ? 'bg-tinyfish-600 text-white shadow-md shadow-tinyfish-600/20'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-dark-800/60'
+                ? 'bg-white text-stone-900 shadow-sm font-semibold'
+                : 'text-stone-600 hover:text-stone-900'
             }`}
           >
             <Globe className="w-3.5 h-3.5" />
-            Live Search Radar
+            Search Radar
           </button>
 
           <button
             onClick={() => setActiveTab('research')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
+            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
               activeTab === 'research'
-                ? 'bg-tinyfish-600 text-white shadow-md shadow-tinyfish-600/20'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-dark-800/60'
+                ? 'bg-white text-stone-900 shadow-sm font-semibold'
+                : 'text-stone-600 hover:text-stone-900'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -84,23 +86,23 @@ export function Header({ activeTab, setActiveTab, status }: HeaderProps) {
 
           <button
             onClick={() => setActiveTab('monitors')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
+            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
               activeTab === 'monitors'
-                ? 'bg-tinyfish-600 text-white shadow-md shadow-tinyfish-600/20'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-dark-800/60'
+                ? 'bg-white text-stone-900 shadow-sm font-semibold'
+                : 'text-stone-600 hover:text-stone-900'
             }`}
           >
             <Compass className="w-3.5 h-3.5" />
-            Sentinels & Monitors
+            Sentinels
           </button>
         </nav>
 
         {/* Live Engine Status & GitHub */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-dark-900 border border-dark-800 text-xs">
-            <span className={`w-2 h-2 rounded-full ${status === 'running' ? 'bg-amber-400 animate-ping' : 'bg-emerald-400'}`} />
-            <span className="text-slate-300 font-mono text-[11px]">
-              {status === 'running' ? 'AGENT ACTIVE' : 'TINYFISH CONNECTED'}
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-stone-200 text-xs shadow-sm">
+            <span className={`w-2 h-2 rounded-full ${status === 'running' ? 'bg-amber-500 animate-pulse' : 'bg-emerald-500'}`} />
+            <span className="text-stone-700 font-medium text-[11px]">
+              {status === 'running' ? 'Agent Active' : 'TinyFish Connected'}
             </span>
           </div>
 
@@ -108,7 +110,7 @@ export function Header({ activeTab, setActiveTab, status }: HeaderProps) {
             href="https://github.com/ShubhiDixit09/aims.tinyfish"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 rounded-lg bg-dark-900 hover:bg-dark-800 border border-dark-800 text-slate-300 hover:text-white transition-colors"
+            className="p-2 rounded-full bg-stone-100 hover:bg-stone-200 border border-stone-200 text-stone-700 hover:text-stone-900 transition-colors"
             title="GitHub Repository"
           >
             <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -116,7 +118,6 @@ export function Header({ activeTab, setActiveTab, status }: HeaderProps) {
             </svg>
           </a>
         </div>
-
       </div>
     </header>
   );

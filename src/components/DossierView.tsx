@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Copy, Check, Download, Layers, Code, Sparkles, ShieldCheck, AlertTriangle, ExternalLink, Quote, CheckCircle2 } from 'lucide-react';
+import { Copy, Check, Download, Layers, Code, Sparkles, ShieldCheck, AlertTriangle, Quote, CheckCircle2 } from 'lucide-react';
 
 interface DossierViewProps {
   result: any;
@@ -41,21 +41,21 @@ export function DossierView({ result, status, runId, decisionVerdict }: DossierV
   };
 
   return (
-    <div className="bg-dark-900 border border-dark-800 rounded-2xl overflow-hidden shadow-2xl mt-6">
+    <div className="bg-white border border-stone-200/90 rounded-2xl overflow-hidden shadow-card mt-6">
       {/* Dossier Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between px-6 py-4 bg-dark-850 border-b border-dark-800 gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between px-6 py-4 bg-stone-50 border-b border-stone-200 gap-3">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-tinyfish-600/20 text-tinyfish-400 border border-tinyfish-500/30">
+          <div className="p-2.5 rounded-xl bg-white border border-stone-200 text-stone-800 shadow-sm">
             <Sparkles className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
+            <h3 className="text-base font-bold text-stone-900 flex items-center gap-2">
               Autonomous Intelligence & Evidence Dossier
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-mono">
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-medium">
                 {status === 'IN_PROGRESS' ? 'EXTRACTING...' : 'VERIFIED EVIDENCE'}
               </span>
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-stone-500 mt-0.5">
               Live web extraction verified with verbatim proof citations and strict contract validation
             </p>
           </div>
@@ -63,13 +63,13 @@ export function DossierView({ result, status, runId, decisionVerdict }: DossierV
 
         {/* View Toggle & Actions */}
         <div className="flex items-center gap-2">
-          <div className="flex bg-dark-900 border border-dark-700/80 p-0.5 rounded-lg text-xs">
+          <div className="flex bg-stone-100 border border-stone-200 p-0.5 rounded-lg text-xs">
             <button
               onClick={() => setViewMode('visual')}
               className={`flex items-center gap-1.5 px-3 py-1 rounded-md transition-colors ${
                 viewMode === 'visual'
-                  ? 'bg-tinyfish-600 text-white font-medium shadow-sm'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-white text-stone-900 font-semibold shadow-sm'
+                  : 'text-stone-600 hover:text-stone-900'
               }`}
             >
               <Layers className="w-3.5 h-3.5" />
@@ -79,26 +79,26 @@ export function DossierView({ result, status, runId, decisionVerdict }: DossierV
               onClick={() => setViewMode('json')}
               className={`flex items-center gap-1.5 px-3 py-1 rounded-md transition-colors ${
                 viewMode === 'json'
-                  ? 'bg-tinyfish-600 text-white font-medium shadow-sm'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-white text-stone-900 font-semibold shadow-sm'
+                  : 'text-stone-600 hover:text-stone-900'
               }`}
             >
               <Code className="w-3.5 h-3.5" />
-              Structured JSON
+              JSON Contract
             </button>
           </div>
 
           <button
             onClick={handleCopy}
-            className="p-2 rounded-lg bg-dark-800 hover:bg-dark-700 text-slate-300 hover:text-white border border-dark-700/60 transition-colors"
+            className="p-2 rounded-lg bg-white hover:bg-stone-100 text-stone-700 border border-stone-200 transition-colors shadow-sm"
             title="Copy JSON"
           >
-            {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+            {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
           </button>
 
           <button
             onClick={handleDownload}
-            className="p-2 rounded-lg bg-dark-800 hover:bg-dark-700 text-slate-300 hover:text-white border border-dark-700/60 transition-colors"
+            className="p-2 rounded-lg bg-white hover:bg-stone-100 text-stone-700 border border-stone-200 transition-colors shadow-sm"
             title="Download JSON"
           >
             <Download className="w-4 h-4" />
@@ -109,35 +109,35 @@ export function DossierView({ result, status, runId, decisionVerdict }: DossierV
       <div className="p-6 space-y-6">
         {/* Value-Add: Autonomous Decision & Verdict Card */}
         {decisionVerdict && (
-          <div className="bg-gradient-to-r from-emerald-950/40 via-dark-900 to-dark-900 border border-emerald-500/30 rounded-xl p-5 shadow-inner">
+          <div className="bg-emerald-50/70 border border-emerald-200 rounded-xl p-5 shadow-sm">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-emerald-400" />
-                <h4 className="text-sm font-bold text-white tracking-wide">
+                <ShieldCheck className="w-5 h-5 text-emerald-700" />
+                <h4 className="text-sm font-bold text-emerald-950">
                   {decisionVerdict.recommendation}
                 </h4>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-mono text-slate-400">Decision Confidence:</span>
-                <span className="text-xs font-mono font-bold text-emerald-400 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                <span className="text-xs text-emerald-800">Decision Confidence:</span>
+                <span className="text-xs font-bold text-emerald-900 px-2 py-0.5 rounded bg-white border border-emerald-200 shadow-sm font-mono">
                   {decisionVerdict.fitScore}%
                 </span>
               </div>
             </div>
 
-            <p className="text-xs text-slate-300 leading-relaxed mb-4">
+            <p className="text-xs text-stone-700 leading-relaxed mb-4">
               {decisionVerdict.decisionExplanation}
             </p>
 
             {/* Evidence Anchors vs Risk Warnings */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2 border-t border-dark-800">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-3 border-t border-emerald-200/60">
               <div className="space-y-1.5">
-                <span className="text-[10px] font-mono font-semibold text-emerald-400 uppercase tracking-wider block">
+                <span className="text-[10px] font-semibold text-emerald-800 uppercase tracking-wider block">
                   Ground-Truth Evidence Anchors
                 </span>
                 {decisionVerdict.evidencePassages.map((ev, i) => (
-                  <div key={i} className="text-xs text-slate-300 flex items-start gap-2 bg-dark-950/60 p-2 rounded-lg border border-dark-800">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 mt-0.5 shrink-0" />
+                  <div key={i} className="text-xs text-stone-800 flex items-start gap-2 bg-white p-2.5 rounded-lg border border-emerald-200 shadow-sm">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 mt-0.5 shrink-0" />
                     <span>{ev}</span>
                   </div>
                 ))}
@@ -145,12 +145,12 @@ export function DossierView({ result, status, runId, decisionVerdict }: DossierV
 
               {decisionVerdict.riskWarnings.length > 0 && (
                 <div className="space-y-1.5">
-                  <span className="text-[10px] font-mono font-semibold text-amber-400 uppercase tracking-wider block">
+                  <span className="text-[10px] font-semibold text-amber-800 uppercase tracking-wider block">
                     Observed Caveats & Missing Factors
                   </span>
                   {decisionVerdict.riskWarnings.map((risk, i) => (
-                    <div key={i} className="text-xs text-amber-200/90 flex items-start gap-2 bg-amber-950/20 p-2 rounded-lg border border-amber-500/20">
-                      <AlertTriangle className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
+                    <div key={i} className="text-xs text-amber-900 flex items-start gap-2 bg-white p-2.5 rounded-lg border border-amber-200 shadow-sm">
+                      <AlertTriangle className="w-3.5 h-3.5 text-amber-600 mt-0.5 shrink-0" />
                       <span>{risk}</span>
                     </div>
                   ))}
@@ -162,7 +162,7 @@ export function DossierView({ result, status, runId, decisionVerdict }: DossierV
 
         {/* Dossier Body */}
         {viewMode === 'json' ? (
-          <pre className="p-4 bg-dark-950 rounded-xl border border-dark-800 font-mono text-xs text-slate-300 overflow-x-auto leading-relaxed max-h-[500px]">
+          <pre className="p-4 bg-stone-50 rounded-xl border border-stone-200 font-mono text-xs text-stone-800 overflow-x-auto leading-relaxed max-h-[500px]">
             {jsonString}
           </pre>
         ) : (
@@ -174,13 +174,13 @@ export function DossierView({ result, status, runId, decisionVerdict }: DossierV
 
                   if (Array.isArray(val)) {
                     return (
-                      <div key={key} className="col-span-full bg-dark-950/80 border border-dark-800 p-5 rounded-xl">
-                        <h4 className="text-xs font-mono font-bold text-tinyfish-400 mb-3 flex items-center justify-between">
+                      <div key={key} className="col-span-full bg-stone-50/70 border border-stone-200 p-5 rounded-xl">
+                        <h4 className="text-xs font-bold text-stone-900 mb-3 flex items-center justify-between">
                           <span className="flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-tinyfish-400" />
+                            <span className="w-2 h-2 rounded-full bg-stone-900" />
                             {label} ({val.length} entries)
                           </span>
-                          <span className="text-[10px] font-normal text-slate-500">
+                          <span className="text-[11px] font-normal text-stone-500">
                             Verified DOM Records
                           </span>
                         </h4>
@@ -188,7 +188,7 @@ export function DossierView({ result, status, runId, decisionVerdict }: DossierV
                           {val.map((item, itemIdx) => (
                             <div
                               key={itemIdx}
-                              className="bg-dark-900 border border-dark-800 p-4 rounded-lg hover:border-tinyfish-500/30 transition-colors flex flex-col justify-between"
+                              className="bg-white border border-stone-200 p-4 rounded-xl shadow-sm flex flex-col justify-between"
                             >
                               <div>
                                 {typeof item === 'object' ? (
@@ -198,16 +198,16 @@ export function DossierView({ result, status, runId, decisionVerdict }: DossierV
                                     const isMissing = v === null || v === undefined;
                                     return (
                                       <div key={k} className="mb-2 last:mb-0">
-                                        <div className="text-[10px] font-mono text-slate-500 uppercase">
+                                        <div className="text-[10px] text-stone-500 uppercase font-medium">
                                           {k.replace(/_/g, ' ')}
                                         </div>
-                                        <div className="text-xs font-medium break-words">
+                                        <div className="text-xs font-medium break-words mt-0.5">
                                           {isMissing ? (
-                                            <span className="text-amber-400/80 bg-amber-500/10 px-1.5 py-0.5 rounded text-[10px] font-mono">
+                                            <span className="text-amber-800 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded text-[10px] font-mono">
                                               [NOT DISCLOSED]
                                             </span>
                                           ) : (
-                                            <span className="text-slate-100">
+                                            <span className="text-stone-900">
                                               {typeof v === 'object' ? JSON.stringify(v) : String(v)}
                                             </span>
                                           )}
@@ -216,14 +216,14 @@ export function DossierView({ result, status, runId, decisionVerdict }: DossierV
                                     );
                                   })
                                 ) : (
-                                  <span className="text-xs text-slate-300">{String(item)}</span>
+                                  <span className="text-xs text-stone-800">{String(item)}</span>
                                 )}
                               </div>
 
                               {/* Verbatim Source Evidence Anchor */}
                               {(item as any)?.evidence && (
-                                <div className="mt-3 pt-2.5 border-t border-dark-800/80 text-[11px] text-slate-400 font-mono flex items-start gap-1.5 bg-dark-950/60 p-2 rounded">
-                                  <Quote className="w-3.5 h-3.5 text-tinyfish-400 mt-0.5 shrink-0" />
+                                <div className="mt-3 pt-2.5 border-t border-stone-100 text-[11px] text-stone-600 flex items-start gap-2 bg-stone-50 p-2.5 rounded-lg border border-stone-200">
+                                  <Quote className="w-3.5 h-3.5 text-stone-500 mt-0.5 shrink-0" />
                                   <span className="italic line-clamp-3">{(item as any).evidence}</span>
                                 </div>
                               )}
@@ -240,18 +240,18 @@ export function DossierView({ result, status, runId, decisionVerdict }: DossierV
                   return (
                     <div
                       key={key}
-                      className="bg-dark-950/80 border border-dark-800 p-4 rounded-xl flex flex-col justify-between"
+                      className="bg-stone-50/70 border border-stone-200 p-4 rounded-xl flex flex-col justify-between"
                     >
-                      <span className="text-[11px] font-mono font-semibold text-slate-400 mb-1">
+                      <span className="text-[11px] font-bold text-stone-600 mb-1">
                         {label}
                       </span>
-                      <div className="text-sm font-medium break-words">
+                      <div className="text-sm font-semibold break-words mt-1">
                         {isMissing ? (
-                          <span className="text-amber-400/80 bg-amber-500/10 px-2 py-0.5 rounded text-xs font-mono">
+                          <span className="text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded text-xs font-mono">
                             [NOT DISCLOSED ON PAGE / NULL]
                           </span>
                         ) : (
-                          <span className="text-slate-100">
+                          <span className="text-stone-900">
                             {typeof val === 'object' ? JSON.stringify(val, null, 2) : String(val)}
                           </span>
                         )}
@@ -261,7 +261,7 @@ export function DossierView({ result, status, runId, decisionVerdict }: DossierV
                 })}
               </div>
             ) : (
-              <div className="p-4 bg-dark-950 rounded-xl text-xs text-slate-300 font-mono">
+              <div className="p-4 bg-stone-50 rounded-xl text-xs text-stone-800 font-mono border border-stone-200">
                 {String(result)}
               </div>
             )}
