@@ -7,28 +7,44 @@
 }
 
 body {
-  background-color: #FAFAF8;
-  color: #1C1917;
+  background-color: #FBFBFA;
+  color: #191817;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Subtle, sophisticated card elevation */
+.sarvam-card {
+  background: #FFFFFF;
+  border: 1px solid #ECEAE5;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02), 0 6px 16px 0 rgba(0, 0, 0, 0.025);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sarvam-card:hover {
+  border-color: #DDD9D2;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.03), 0 10px 24px 0 rgba(0, 0, 0, 0.035);
 }
 
 /* Crisp, clean modern scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F5F5F0;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D6D3D1;
-  border-radius: 3px;
+  background: #DDD9D2;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #A8A29E;
+  background: #BBB7AF;
 }

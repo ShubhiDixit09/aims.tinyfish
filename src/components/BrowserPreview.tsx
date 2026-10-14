@@ -26,30 +26,30 @@ export function BrowserPreview({
   };
 
   return (
-    <div className={`flex flex-col bg-white border border-stone-200/90 rounded-2xl overflow-hidden shadow-card transition-all duration-300 ${
+    <div className={`flex flex-col bg-white border border-[#ECEAE5] rounded-3xl overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02),0_8px_24px_rgba(0,0,0,0.025)] transition-all duration-300 ${
       isFullscreen ? 'fixed inset-4 z-50 bg-white/95 backdrop-blur-xl' : 'h-[620px]'
     }`}>
       {/* Clean Browser Chrome Header */}
-      <div className="flex items-center justify-between px-5 py-3 bg-stone-50 border-b border-stone-200">
+      <div className="flex items-center justify-between px-5 py-3.5 bg-[#FBFBFA] border-b border-[#ECEAE5]">
         
         {/* Window controls */}
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-rose-400" />
-          <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-          <span className="ml-2 text-xs font-semibold text-stone-700 flex items-center gap-1.5">
-            <Globe className="w-3.5 h-3.5 text-stone-500" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#FF6B6B]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#FCC419]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#51CF66]" />
+          <span className="ml-2 text-xs font-bold text-[#191817] flex items-center gap-1.5">
+            <Globe className="w-3.5 h-3.5 text-[#E8590C]" />
             Cloud Browser Viewport
           </span>
         </div>
 
         {/* URL Capsule */}
         <div className="flex-1 max-w-md mx-4">
-          <div className="flex items-center gap-2 px-3.5 py-1 bg-white border border-stone-200 rounded-full text-xs text-stone-700 shadow-sm truncate">
-            <ShieldCheck className="w-3 h-3 text-emerald-600 shrink-0" />
-            <span className="text-stone-400 text-[11px] font-mono">https://</span>
-            <span className="truncate font-mono font-medium text-stone-800">
-              {targetUrl ? targetUrl.replace(/^https?:\/\//, '') : 'awaiting-portal-url...'}
+          <div className="flex items-center gap-2 px-4 py-1.5 bg-white border border-[#ECEAE5] rounded-full text-xs text-[#191817] shadow-sm truncate">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#059669] shrink-0" />
+            <span className="text-[#8A867E] text-[11px] font-mono">https://</span>
+            <span className="truncate font-mono font-medium text-[#191817]">
+              {targetUrl ? targetUrl.replace(/^https?:\/\//, '') : 'awaiting-portal-command...'}
             </span>
           </div>
         </div>
@@ -57,10 +57,10 @@ export function BrowserPreview({
         {/* Live Indicator & Controls */}
         <div className="flex items-center gap-2">
           {isRunning && (
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-semibold">
-              <Radio className="w-3 h-3 text-amber-600 animate-spin" />
-              <span>NAVIGATING</span>
-              <span className="ml-1 px-1.5 py-0.2 bg-stone-900 text-white rounded text-[10px] font-mono">
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E8590C]/10 border border-[#E8590C]/20 text-[#C2410C] text-xs font-bold">
+              <Radio className="w-3 h-3 text-[#E8590C] animate-spin" />
+              <span>LIVE</span>
+              <span className="ml-1 px-1.5 py-0.2 bg-[#191817] text-white rounded text-[10px] font-mono">
                 Step {stepCount}
               </span>
             </div>
@@ -69,7 +69,7 @@ export function BrowserPreview({
           {streamingUrl && (
             <button
               onClick={handleRefresh}
-              className="p-1.5 rounded-lg text-stone-500 hover:text-stone-900 hover:bg-stone-100 transition-colors"
+              className="p-1.5 rounded-xl text-[#73726E] hover:text-[#191817] hover:bg-[#F0EEEA] transition-colors"
               title="Refresh Stream"
             >
               <RefreshCw className="w-3.5 h-3.5" />
@@ -78,7 +78,7 @@ export function BrowserPreview({
 
           <button
             onClick={() => setIsFullscreen(!isFullscreen)}
-            className="p-1.5 rounded-lg text-stone-500 hover:text-stone-900 hover:bg-stone-100 transition-colors"
+            className="p-1.5 rounded-xl text-[#73726E] hover:text-[#191817] hover:bg-[#F0EEEA] transition-colors"
             title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen View'}
           >
             {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
@@ -87,7 +87,7 @@ export function BrowserPreview({
       </div>
 
       {/* Main Viewport Content */}
-      <div className="relative flex-1 bg-stone-100/50 flex items-center justify-center overflow-hidden">
+      <div className="relative flex-1 bg-[#F5F5F0]/60 flex items-center justify-center overflow-hidden">
         {streamingUrl ? (
           <iframe
             key={iframeKey}
@@ -99,23 +99,23 @@ export function BrowserPreview({
           />
         ) : (
           <div className="flex flex-col items-center justify-center p-8 text-center max-w-sm">
-            <div className="w-16 h-16 mb-5 flex items-center justify-center rounded-2xl bg-white border border-stone-200 shadow-sm text-stone-700">
-              <Globe className="w-8 h-8 text-stone-500" />
+            <div className="w-16 h-16 mb-5 flex items-center justify-center rounded-2xl bg-white border border-[#ECEAE5] shadow-sm text-[#191817]">
+              <Globe className="w-8 h-8 text-[#E8590C]" />
             </div>
 
-            <h3 className="text-base font-bold text-stone-900 mb-1.5">
+            <h3 className="text-base font-bold text-[#191817] mb-1.5">
               {isRunning ? 'Initializing Cloud Browser...' : 'Remote Viewport Standby'}
             </h3>
             
-            <p className="text-xs text-stone-500 leading-relaxed mb-4">
+            <p className="text-xs text-[#73726E] leading-relaxed mb-4">
               {isRunning
-                ? 'TinyFish agent is initializing the remote browser session. The 60fps live stream feed will appear here in ~5 seconds.'
-                : 'Select a government service preset on the left and click "Launch Live Autonomous Mission" to watch the agent navigate in real time.'}
+                ? 'TinyFish agent is initializing the cloud browser session. The 60fps live stream feed will appear here in ~5 seconds.'
+                : 'Select a government service on the left and click "Launch Live Autonomous Mission" to watch the agent navigate in real time.'}
             </p>
 
             {currentPurpose && isRunning && (
-              <div className="w-full p-3 rounded-xl bg-white border border-stone-200 text-xs text-stone-700 shadow-sm text-left">
-                <span className="font-semibold text-stone-900">Current Action:</span> {currentPurpose}
+              <div className="w-full p-3.5 rounded-2xl bg-white border border-[#ECEAE5] text-xs text-[#191817] shadow-sm text-left">
+                <span className="font-bold text-[#E8590C]">Current Action:</span> {currentPurpose}
               </div>
             )}
           </div>
@@ -123,11 +123,11 @@ export function BrowserPreview({
       </div>
 
       {/* Bottom Status Ticker */}
-      <div className="px-5 py-2.5 bg-stone-50 border-t border-stone-200 flex items-center justify-between text-xs text-stone-600">
+      <div className="px-5 py-3 bg-[#FBFBFA] border-t border-[#ECEAE5] flex items-center justify-between text-xs text-[#57544E]">
         <div className="flex items-center gap-2 truncate">
-          <span className={`w-2 h-2 rounded-full ${isRunning ? 'bg-amber-500 animate-pulse' : 'bg-emerald-500'}`} />
+          <span className={`w-2 h-2 rounded-full ${isRunning ? 'bg-[#E8590C] animate-pulse' : 'bg-[#059669]'}`} />
           <span className="truncate font-medium">
-            {currentPurpose ? currentPurpose : 'Agent ready for navigation command'}
+            {currentPurpose ? currentPurpose : 'Personal agent ready for navigation command'}
           </span>
         </div>
         {streamingUrl && (
@@ -135,7 +135,7 @@ export function BrowserPreview({
             href={streamingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 text-stone-800 hover:text-black font-medium transition-colors ml-2 shrink-0"
+            className="flex items-center gap-1 text-[#191817] hover:text-black font-semibold transition-colors ml-2 shrink-0"
           >
             <span>Direct Viewport</span>
             <ExternalLink className="w-3 h-3" />

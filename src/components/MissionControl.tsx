@@ -45,30 +45,32 @@ export function MissionControl({
   };
 
   return (
-    <div className="flex flex-col bg-white border border-stone-200/90 rounded-2xl p-6 shadow-card space-y-5">
+    <div className="flex flex-col bg-white border border-[#ECEAE5] rounded-3xl p-6 sm:p-7 shadow-[0_1px_3px_rgba(0,0,0,0.02)] space-y-5">
       {/* Top Bar with Demo Recovery Option */}
-      <div className="flex items-center justify-between pb-3 border-b border-stone-100">
-        <span className="flex items-center gap-2 text-xs font-bold text-stone-900">
-          <Sparkles className="w-3.5 h-3.5 text-stone-700" />
-          Autonomous Mission Control
-        </span>
+      <div className="flex items-center justify-between pb-4 border-b border-[#ECEAE5]">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-[#E8590C]" />
+          <span className="text-xs font-bold text-[#191817]">
+            Autonomous Mission Control
+          </span>
+        </div>
 
         {/* 90-Second Demo Recovery Trigger */}
         <button
           type="button"
           onClick={onLoadDemoRecovery}
           disabled={isRunning}
-          className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-200 text-xs font-medium transition-all shadow-sm"
+          className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#059669]/10 hover:bg-[#059669]/20 text-[#059669] border border-[#059669]/20 text-xs font-semibold transition-all shadow-sm"
           title="Instant verified demo for fast 90-second judge presentations"
         >
-          <FastForward className="w-3 h-3 text-stone-600" />
+          <FastForward className="w-3 h-3 text-[#059669]" />
           <span>90s Pitch Recovery</span>
         </button>
       </div>
 
       {/* Preset Selector Bar */}
       <div>
-        <label className="text-xs font-medium text-stone-700 mb-2 block">
+        <label className="text-xs font-bold text-[#383633] mb-2 block">
           Preset Service Blueprints
         </label>
         <div className="grid grid-cols-2 gap-2.5">
@@ -77,14 +79,14 @@ export function MissionControl({
               key={preset.id}
               onClick={() => handleSelectPreset(preset)}
               disabled={isRunning}
-              className={`p-3 rounded-xl text-left border transition-all text-xs flex flex-col justify-between ${
+              className={`p-3.5 rounded-2xl text-left border transition-all text-xs flex flex-col justify-between ${
                 selectedPresetId === preset.id
-                  ? 'bg-stone-50 border-stone-900 text-stone-900 shadow-sm'
-                  : 'bg-white border-stone-200 text-stone-600 hover:text-stone-900 hover:border-stone-300'
+                  ? 'bg-[#FBFBFA] border-[#191817] text-[#191817] shadow-sm font-semibold'
+                  : 'bg-white border-[#ECEAE5] text-[#57544E] hover:text-[#191817] hover:border-[#DDD9D2]'
               }`}
             >
-              <div className="font-bold text-stone-900 truncate mb-1">{preset.title}</div>
-              <div className="text-[11px] text-stone-500 line-clamp-1">{preset.description}</div>
+              <div className="font-bold text-[#191817] truncate mb-1">{preset.title}</div>
+              <div className="text-[11px] text-[#73726E] line-clamp-1">{preset.description}</div>
             </button>
           ))}
         </div>
@@ -92,7 +94,7 @@ export function MissionControl({
 
       {/* Target URL */}
       <div>
-        <label className="block text-xs font-medium text-stone-700 mb-1.5">
+        <label className="block text-xs font-bold text-[#383633] mb-1.5">
           Target Portal Address (URL)
         </label>
         <input
@@ -101,15 +103,15 @@ export function MissionControl({
           onChange={(e) => setUrl(e.target.value)}
           disabled={isRunning}
           placeholder="https://edistrict.delhigovt.nic.in"
-          className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-stone-900 text-xs font-mono focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition-all shadow-sm"
+          className="w-full px-4 py-2.5 rounded-2xl bg-[#FBFBFA] border border-[#ECEAE5] text-[#191817] text-xs font-mono focus:outline-none focus:border-[#191817] focus:bg-white transition-all shadow-inner"
         />
       </div>
 
       {/* Natural Language Goal */}
       <div>
-        <label className="block text-xs font-medium text-stone-700 mb-1.5 flex items-center justify-between">
-          <span>Personal Agent Goal & Instructions</span>
-          <span className="text-[11px] text-stone-500">Autonomous stopping condition</span>
+        <label className="block text-xs font-bold text-[#383633] mb-1.5 flex items-center justify-between">
+          <span>Personal Agent Goal & Strategy</span>
+          <span className="text-[11px] text-[#8A867E] font-normal">Autonomous stopping condition</span>
         </label>
         <textarea
           rows={3}
@@ -117,23 +119,23 @@ export function MissionControl({
           onChange={(e) => setGoal(e.target.value)}
           disabled={isRunning}
           placeholder="Specify exact objective, required fields, null handling, and stopping condition."
-          className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-stone-900 text-xs leading-relaxed focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition-all shadow-sm"
+          className="w-full px-4 py-2.5 rounded-2xl bg-[#FBFBFA] border border-[#ECEAE5] text-[#191817] text-xs leading-relaxed focus:outline-none focus:border-[#191817] focus:bg-white transition-all shadow-inner"
         />
       </div>
 
       {/* Structured Output Schema Accordion */}
-      <div className="border border-stone-200 rounded-xl overflow-hidden bg-stone-50">
+      <div className="border border-[#ECEAE5] rounded-2xl overflow-hidden bg-[#FBFBFA]">
         <button
           type="button"
           onClick={() => setShowSchema(!showSchema)}
-          className="w-full flex items-center justify-between px-4 py-2.5 text-xs font-medium text-stone-800 hover:bg-stone-100 transition-colors"
+          className="w-full flex items-center justify-between px-4 py-3 text-xs font-semibold text-[#191817] hover:bg-[#F0EEEA] transition-colors"
         >
           <span className="flex items-center gap-2">
-            <Layers className="w-3.5 h-3.5 text-stone-600" />
+            <Layers className="w-3.5 h-3.5 text-[#E8590C]" />
             Strict Output Schema (JSON Contract)
           </span>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+            <span className="text-[10px] font-bold text-[#059669] bg-[#059669]/10 px-2.5 py-0.5 rounded-full border border-[#059669]/20">
               Active
             </span>
             {showSchema ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
@@ -141,8 +143,8 @@ export function MissionControl({
         </button>
 
         {showSchema && (
-          <div className="p-3.5 border-t border-stone-200 bg-white">
-            <p className="text-[11px] text-stone-500 mb-2">
+          <div className="p-4 border-t border-[#ECEAE5] bg-white">
+            <p className="text-[11px] text-[#73726E] mb-2">
               Enforced on TinyFish cloud: guarantees strictly typed fields & evidence quotes.
             </p>
             <textarea
@@ -150,21 +152,21 @@ export function MissionControl({
               value={schema}
               onChange={(e) => setSchema(e.target.value)}
               disabled={isRunning}
-              className="w-full px-3 py-2 rounded-lg bg-stone-50 border border-stone-200 text-stone-800 font-mono text-[11px] focus:outline-none focus:border-stone-900"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-[#FBFBFA] border border-[#ECEAE5] text-[#191817] font-mono text-[11px] focus:outline-none focus:border-[#191817]"
             />
           </div>
         )}
       </div>
 
       {/* Advanced Switches: Stealth Mode */}
-      <div className="flex items-center justify-between px-4 py-3 bg-stone-50 border border-stone-200/80 rounded-xl">
+      <div className="flex items-center justify-between px-4 py-3 bg-[#FBFBFA] border border-[#ECEAE5] rounded-2xl">
         <div className="flex items-center gap-3">
-          <div className={`p-2 rounded-lg ${isStealth ? 'bg-stone-900 text-white' : 'bg-white border border-stone-200 text-stone-500'}`}>
+          <div className={`p-2 rounded-xl ${isStealth ? 'bg-[#191817] text-white' : 'bg-white border border-[#ECEAE5] text-[#73726E]'}`}>
             <Shield className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-xs font-semibold text-stone-900">Stealth Residential Mode</div>
-            <div className="text-[11px] text-stone-500">Routes browser through clean residential proxies</div>
+            <div className="text-xs font-bold text-[#191817]">Stealth Residential Mode</div>
+            <div className="text-[11px] text-[#73726E]">Routes browser through clean residential proxies</div>
           </div>
         </div>
 
@@ -173,7 +175,7 @@ export function MissionControl({
           onClick={() => setIsStealth(!isStealth)}
           disabled={isRunning}
           className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-            isStealth ? 'bg-stone-900' : 'bg-stone-300'
+            isStealth ? 'bg-[#191817]' : 'bg-[#DDD9D2]'
           }`}
         >
           <span
@@ -186,11 +188,11 @@ export function MissionControl({
 
       {/* Error Alert */}
       {error && (
-        <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 flex items-start gap-2.5 text-rose-900 text-xs">
-          <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0 text-rose-600" />
+        <div className="p-4 rounded-2xl bg-[#DC2626]/10 border border-[#DC2626]/20 flex items-start gap-2.5 text-[#B91C1C] text-xs">
+          <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0 text-[#DC2626]" />
           <div>
-            <div className="font-semibold text-rose-950">Mission Error</div>
-            <div className="text-[11px] text-rose-800 mt-0.5">{error}</div>
+            <div className="font-bold text-[#7F1D1D]">Mission Error</div>
+            <div className="text-[11px] text-[#991B1B] mt-0.5">{error}</div>
           </div>
         </div>
       )}
@@ -199,10 +201,10 @@ export function MissionControl({
       <button
         onClick={onLaunch}
         disabled={isRunning || !url || !goal}
-        className={`w-full py-3.5 px-4 rounded-xl font-semibold text-xs tracking-wide flex items-center justify-center gap-2 shadow-sm transition-all ${
+        className={`w-full py-3.5 px-4 rounded-2xl font-semibold text-xs tracking-wide flex items-center justify-center gap-2 shadow-sm transition-all ${
           isRunning || !url || !goal
-            ? 'bg-stone-100 text-stone-400 cursor-not-allowed border border-stone-200'
-            : 'bg-stone-900 hover:bg-black text-white active:scale-[0.99]'
+            ? 'bg-[#F0EEEA] text-[#8A867E] cursor-not-allowed border border-[#ECEAE5]'
+            : 'bg-[#191817] hover:bg-black text-white active:scale-[0.99]'
         }`}
       >
         {isRunning ? (
@@ -212,7 +214,7 @@ export function MissionControl({
           </>
         ) : (
           <>
-            <Play className="w-4 h-4 fill-current" />
+            <Play className="w-4 h-4 fill-current text-[#FFA94D]" />
             <span>Launch Live Autonomous Mission</span>
           </>
         )}

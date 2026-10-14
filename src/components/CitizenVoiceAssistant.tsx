@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Mic, MicOff, Volume2, Sparkles, Send, Bot, User, Languages } from 'lucide-react';
+import React, { useState } from 'react';
+import { Mic, MicOff, Volume2, Sparkles, Send, Bot, Languages } from 'lucide-react';
 
 interface CitizenVoiceAssistantProps {
   onSelectServiceIntent: (serviceId: string, customQuery?: string) => void;
@@ -29,7 +29,7 @@ export function CitizenVoiceAssistant({
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       sender: 'ai',
-      text: 'Namaste! Main aapka CivicPilot Copilot hoon. Aap kisi bhi government portal ya document ke baare mein pooch sakte hain.',
+      text: 'Namaste! Main aapka CivicPilot Indic Copilot hoon. Aap kisi bhi government portal ya document ke baare mein pooch sakte hain.',
       hindiTranslation: 'नमस्ते! मैं आपका सिविकपायलट सहायक हूँ। आप दिल्ली ई-डिस्ट्रिक्ट, पासपोर्ट या छात्रवृत्ति के बारे में पूछ सकते हैं।',
     },
   ]);
@@ -114,7 +114,7 @@ export function CitizenVoiceAssistant({
       if (lower.includes('income') || lower.includes('aay') || lower.includes('certificate') || lower.includes('edistrict')) {
         reply = {
           sender: 'ai',
-          text: 'Delhi e-District par Income Certificate ke liye 4 cheezein chahiye: 1) Aadhaar Card, 2) Salary Slip ya ITR, 3) BSES Bijli ka bill (3 saal ka proof), aur 4) Annexure-I Self-Declaration Affidavit. Sabhi files 100KB se kam honi chahiye.',
+          text: 'Delhi e-District par Income Certificate ke liye 4 documents chahiye: 1) Aadhaar Card, 2) Salary Slip ya ITR, 3) BSES Bijli ka bill (3 saal ka residence proof), aur 4) Annexure-I Self-Declaration Affidavit. Delhi portal par har file strictly 100KB se kam honi chahiye.',
           hindiTranslation: 'दिल्ली ई-डिस्ट्रिक्ट आय प्रमाण पत्र के लिए 4 दस्तावेज़ आवश्यक हैं: आधार कार्ड, वेतन पर्ची/आईटीआर, 3 वर्ष का बिजली बिल, और अनुलग्नक-I स्व-घोषणा पत्र। सभी फाइलें 100KB से कम होनी चाहिए।',
           actionTag: 'DOC_CHECK',
         };
@@ -146,34 +146,34 @@ export function CitizenVoiceAssistant({
   };
 
   return (
-    <div className="bg-white border border-stone-200/90 rounded-2xl p-6 shadow-card flex flex-col space-y-4">
+    <div className="bg-white border border-[#ECEAE5] rounded-3xl p-6 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex flex-col space-y-5">
       {/* Header with Language Toggles */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-stone-100">
-        <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-stone-100 border border-stone-200 text-stone-800 shadow-sm">
-            <Bot className="w-4 h-4" />
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#ECEAE5]">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-2xl bg-[#E8590C]/10 border border-[#E8590C]/20 text-[#E8590C] shadow-sm">
+            <Bot className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-stone-900">
+            <h3 className="text-sm font-bold text-[#191817]">
               CivicPilot Indic Voice & Chat Copilot
             </h3>
-            <p className="text-xs text-stone-500">
+            <p className="text-xs text-[#73726E]">
               Real-time conversational guidance in Hinglish, Hindi, and English
             </p>
           </div>
         </div>
 
         {/* Language Pill Switcher */}
-        <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-full border border-stone-200">
-          <Languages className="w-3.5 h-3.5 text-stone-500 ml-1.5" />
+        <div className="flex items-center gap-1 bg-[#F0EEEA] p-1 rounded-full border border-[#ECEAE5]">
+          <Languages className="w-3.5 h-3.5 text-[#8A867E] ml-2" />
           {(['hinglish', 'hindi', 'english'] as const).map((mode) => (
             <button
               key={mode}
               onClick={() => setLanguageMode(mode)}
-              className={`px-3 py-1 rounded-full text-[11px] font-medium capitalize transition-all ${
+              className={`px-3 py-1 rounded-full text-[11px] capitalize transition-all ${
                 languageMode === mode
-                  ? 'bg-white text-stone-900 shadow-sm font-semibold'
-                  : 'text-stone-600 hover:text-stone-900'
+                  ? 'bg-white text-[#191817] shadow-sm font-bold'
+                  : 'text-[#57544E] hover:text-[#191817] font-medium'
               }`}
             >
               {mode}
@@ -183,23 +183,23 @@ export function CitizenVoiceAssistant({
       </div>
 
       {/* Chat Messages Log */}
-      <div className="h-64 overflow-y-auto space-y-3 p-1">
+      <div className="h-64 overflow-y-auto space-y-3.5 p-1">
         {messages.map((msg, idx) => (
           <div
             key={idx}
             className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
           >
             <div
-              className={`max-w-[85%] rounded-2xl p-3.5 text-xs ${
+              className={`max-w-[85%] rounded-2xl p-4 text-xs ${
                 msg.sender === 'user'
-                  ? 'bg-stone-900 text-white rounded-tr-sm shadow-sm'
-                  : 'bg-stone-50 text-stone-800 rounded-tl-sm border border-stone-200/80 shadow-sm'
+                  ? 'bg-[#191817] text-white rounded-tr-sm shadow-sm'
+                  : 'bg-[#FBFBFA] text-[#191817] rounded-tl-sm border border-[#ECEAE5] shadow-sm leading-relaxed'
               }`}
             >
               <div className="leading-relaxed">{msg.text}</div>
 
               {msg.hindiTranslation && languageMode !== 'english' && (
-                <div className="mt-2 pt-2 border-t border-stone-200/80 text-[11px] text-stone-600 font-sans">
+                <div className="mt-2.5 pt-2.5 border-t border-[#ECEAE5] text-[11px] text-[#57544E] font-sans">
                   {msg.hindiTranslation}
                 </div>
               )}
@@ -208,9 +208,9 @@ export function CitizenVoiceAssistant({
               {msg.actionTag === 'DOC_CHECK' && (
                 <button
                   onClick={onTriggerDocumentCheck}
-                  className="mt-2.5 px-3 py-1 rounded-lg bg-stone-900 text-white font-medium text-[11px] hover:bg-black transition-colors flex items-center gap-1.5"
+                  className="mt-3 px-3.5 py-1.5 rounded-xl bg-[#191817] text-white font-semibold text-[11px] hover:bg-black transition-colors flex items-center gap-1.5"
                 >
-                  <Sparkles className="w-3 h-3 text-amber-400" />
+                  <Sparkles className="w-3 h-3 text-[#FFA94D]" />
                   <span>Audit Documents Now</span>
                 </button>
               )}
@@ -218,9 +218,9 @@ export function CitizenVoiceAssistant({
               {msg.actionTag === 'AFFIDAVIT' && (
                 <button
                   onClick={onGenerateAffidavit}
-                  className="mt-2.5 px-3 py-1 rounded-lg bg-stone-900 text-white font-medium text-[11px] hover:bg-black transition-colors flex items-center gap-1.5"
+                  className="mt-3 px-3.5 py-1.5 rounded-xl bg-[#191817] text-white font-semibold text-[11px] hover:bg-black transition-colors flex items-center gap-1.5"
                 >
-                  <Sparkles className="w-3 h-3 text-amber-400" />
+                  <Sparkles className="w-3 h-3 text-[#FFA94D]" />
                   <span>Preview Annexure-I Draft</span>
                 </button>
               )}
@@ -229,10 +229,10 @@ export function CitizenVoiceAssistant({
             {msg.sender === 'ai' && (
               <button
                 onClick={() => speakText(msg.text)}
-                className="mt-1 flex items-center gap-1 text-[10px] text-stone-400 hover:text-stone-700 transition-colors ml-1"
+                className="mt-1 flex items-center gap-1 text-[11px] text-[#8A867E] hover:text-[#191817] transition-colors ml-1"
                 title="Speak Out Aloud"
               >
-                <Volume2 className="w-3 h-3" />
+                <Volume2 className="w-3.5 h-3.5" />
                 <span>Listen</span>
               </button>
             )}
@@ -250,7 +250,7 @@ export function CitizenVoiceAssistant({
           <button
             key={i}
             onClick={() => handleSendQuery(prompt)}
-            className="text-[11px] bg-stone-50 hover:bg-stone-100 text-stone-700 px-3 py-1 rounded-full border border-stone-200 transition-colors"
+            className="text-[11px] bg-[#F0EEEA] hover:bg-[#E8E5DF] text-[#383633] px-3.5 py-1.5 rounded-full border border-[#ECEAE5] transition-colors font-medium"
           >
             {prompt}
           </button>
@@ -258,14 +258,14 @@ export function CitizenVoiceAssistant({
       </div>
 
       {/* Input Bar with Speech Recognition Mic */}
-      <div className="flex items-center gap-2 pt-2 border-t border-stone-100">
+      <div className="flex items-center gap-2 pt-2 border-t border-[#ECEAE5]">
         <button
           type="button"
           onClick={toggleListening}
           className={`p-3 rounded-full transition-all shadow-sm ${
             isListening
-              ? 'bg-amber-600 text-white animate-pulse'
-              : 'bg-stone-900 hover:bg-black text-white'
+              ? 'bg-[#E8590C] text-white animate-pulse'
+              : 'bg-[#191817] hover:bg-black text-white'
           }`}
           title={isListening ? 'Listening...' : 'Click to Speak'}
         >
@@ -282,14 +282,14 @@ export function CitizenVoiceAssistant({
               ? 'Sun raha hoon... Boliye...'
               : 'Type or speak in Hindi / Hinglish...'
           }
-          className="flex-1 bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-stone-900 focus:bg-white transition-all"
+          className="flex-1 bg-[#FBFBFA] border border-[#ECEAE5] rounded-2xl px-4 py-2.5 text-xs text-[#191817] focus:outline-none focus:border-[#191817] focus:bg-white transition-all shadow-inner"
         />
 
         <button
           type="button"
           onClick={() => handleSendQuery()}
           disabled={!inputText.trim()}
-          className="p-3 rounded-xl bg-stone-900 hover:bg-black text-white transition-colors disabled:opacity-40 shadow-sm"
+          className="p-3 rounded-2xl bg-[#191817] hover:bg-black text-white transition-colors disabled:opacity-40 shadow-sm"
         >
           <Send className="w-4 h-4" />
         </button>
