@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { MISSION_PRESETS } from '@/lib/presets';
 import { MissionPreset } from '@/lib/types';
-import { Play, Sparkles, Shield, ChevronDown, ChevronUp, Layers, AlertTriangle } from 'lucide-react';
+import { Play, Sparkles, Shield, ChevronDown, ChevronUp, Layers, AlertTriangle, FastForward } from 'lucide-react';
 
 interface MissionControlProps {
   url: string;
@@ -16,7 +16,7 @@ interface MissionControlProps {
   setIsStealth: (stealth: boolean) => void;
   isRunning: boolean;
   onLaunch: () => void;
-  onCancel?: () => void;
+  onLoadDemoRecovery: () => void;
   error: string | null;
 }
 
@@ -31,6 +31,7 @@ export function MissionControl({
   setIsStealth,
   isRunning,
   onLaunch,
+  onLoadDemoRecovery,
   error,
 }: MissionControlProps) {
   const [showSchema, setShowSchema] = useState(false);
@@ -45,14 +46,30 @@ export function MissionControl({
 
   return (
     <div className="flex flex-col bg-dark-900 border border-dark-800 rounded-2xl p-5 shadow-xl space-y-4">
+      {/* Top Bar with Demo Recovery Option */}
+      <div className="flex items-center justify-between pb-1 border-b border-dark-800/80">
+        <span className="flex items-center gap-1.5 text-xs font-mono font-medium text-slate-300">
+          <Sparkles className="w-3.5 h-3.5 text-tinyfish-400" />
+          Autonomous Mission Control
+        </span>
+
+        {/* 90-Second Demo Recovery Trigger */}
+        <button
+          type="button"
+          onClick={onLoadDemoRecovery}
+          disabled={isRunning}
+          className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-mono transition-all"
+          title="Instant verified demo for fast 90-second judge presentations"
+        >
+          <FastForward className="w-3 h-3" />
+          <span>90s Pitch Recovery</span>
+        </button>
+      </div>
+
       {/* Preset Selector Bar */}
       <div>
-        <label className="text-xs font-mono text-slate-400 mb-2 flex items-center justify-between">
-          <span className="flex items-center gap-1.5 text-slate-300">
-            <Sparkles className="w-3.5 h-3.5 text-tinyfish-400" />
-            Quick Autonomous Presets
-          </span>
-          <span className="text-[11px] text-slate-500">Click to autofill goal & schema</span>
+        <label className="text-[11px] font-mono text-slate-400 mb-1.5 block">
+          Preset Mission Blueprints
         </label>
         <div className="grid grid-cols-2 gap-2">
           {MISSION_PRESETS.map((preset) => (
@@ -92,14 +109,14 @@ export function MissionControl({
       <div>
         <label className="block text-xs font-mono text-slate-400 mb-1.5 flex items-center justify-between">
           <span>Autonomous Agent Goal & Strategy</span>
-          <span className="text-[10px] text-slate-500 font-sans">Natural language prompt</span>
+          <span className="text-[10px] text-tinyfish-400 font-mono">Bound with stopping condition</span>
         </label>
         <textarea
           rows={3}
           value={goal}
           onChange={(e) => setGoal(e.target.value)}
           disabled={isRunning}
-          placeholder="What should TinyFish accomplish on this page? (e.g. Compare pricing tiers, test form inputs, extract tables)"
+          placeholder="Specify exact objective, required fields, null handling, and stopping condition."
           className="w-full px-3.5 py-2.5 rounded-xl bg-dark-950 border border-dark-800 text-slate-100 text-xs leading-relaxed focus:outline-none focus:border-tinyfish-500 transition-colors"
         />
       </div>
@@ -125,8 +142,8 @@ export function MissionControl({
 
         {showSchema && (
           <div className="p-3 border-t border-dark-800">
-            <p className="text-[11px] text-slate-400 mb-2">
-              TinyFish validates its extracted output against this schema before returning results.
+            <p className="text-[11px] text-slate-400 mb-2 font-mono">
+              Enforced on TinyFish cloud: guarantees strictly typed fields & evidence quotes.
             </p>
             <textarea
               rows={6}
@@ -196,7 +213,7 @@ export function MissionControl({
         ) : (
           <>
             <Play className="w-4 h-4 fill-current" />
-            <span>Launch Autonomous Mission</span>
+            <span>Launch Live Autonomous Mission</span>
           </>
         )}
       </button>

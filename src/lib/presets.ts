@@ -3,11 +3,12 @@ import { MissionPreset } from './types';
 export const MISSION_PRESETS: MissionPreset[] = [
   {
     id: 'db-pricing',
-    title: 'Cloud Database Pricing & SLA Auditor',
+    title: 'Cloud Database Architecture & SLA Auditor',
     category: 'procurement',
     url: 'https://supabase.com/pricing',
-    goal: 'Analyze the pricing tiers (Free, Pro, Team, Enterprise). Extract the price per month, compute limits, storage allowances, and SLA commitments for each tier. Return structured JSON.',
-    description: 'Autonomous extraction of multi-tier cloud specs, computing limits, and overage billing rates.',
+    goal: 'Analyze the pricing tiers (Free, Pro, Team, Enterprise). For each tier, extract the exact name, price per month, compute limits, and verbatim evidence quote for storage or SLA. Use null for missing values. Stop after analyzing all visible tiers. Return structured JSON.',
+    description: 'Autonomous extraction of multi-tier cloud specs, compute limits, and verbatim SLA evidence.',
+    sampleDecisionCriteria: 'Production Readiness Verdict: Must have unpausing compute and 99.9%+ SLA guarantee.',
     schema: {
       type: 'object',
       properties: {
@@ -21,10 +22,7 @@ export const MISSION_PRESETS: MissionPreset[] = [
               price: { type: 'string' },
               database_space: { type: 'string' },
               compute_credits: { type: 'string' },
-              key_features: {
-                type: 'array',
-                items: { type: 'string' }
-              }
+              evidence: { type: 'string' }
             },
             required: ['name', 'price']
           }
@@ -35,12 +33,13 @@ export const MISSION_PRESETS: MissionPreset[] = [
     }
   },
   {
-    id: 'hn-sentinel',
-    title: 'Tech Trending & Launch Intelligence',
-    category: 'technical',
+    id: 'dtu-opportunities',
+    title: 'Student Grants & Hackathon Opportunity Scout',
+    category: 'opportunity',
     url: 'https://news.ycombinator.com',
-    goal: 'Extract the top 5 highest-ranking stories on Hacker News including rank, title, points, comment count, and target URL.',
-    description: 'Instant live radar of trending tech innovations, developer releases, and community discussions.',
+    goal: 'Scan the top submissions. Find up to 5 opportunities, grants, or developer project launches. Extract rank, title, URL, points, and brief relevance. Exclude unrelated posts. Use null for missing values. Stop after 5 verified records. Return structured JSON.',
+    description: 'Instant radar of tech launches, student grants, and open hackathon programs with verbatim proof.',
+    sampleDecisionCriteria: 'Eligibility Verdict: Score by relevance, community validation (points > 50), and verified URL.',
     schema: {
       type: 'object',
       properties: {
@@ -54,7 +53,7 @@ export const MISSION_PRESETS: MissionPreset[] = [
               title: { type: 'string' },
               url: { type: 'string' },
               points: { type: 'string' },
-              comments: { type: 'string' }
+              evidence: { type: 'string' }
             },
             required: ['rank', 'title', 'url']
           }
@@ -68,8 +67,9 @@ export const MISSION_PRESETS: MissionPreset[] = [
     title: 'Security & Enterprise Compliance Scanner',
     category: 'competitive',
     url: 'https://vercel.com/pricing',
-    goal: 'Navigate to the enterprise security section. Extract certifications (SOC2, ISO, HIPAA), Single Sign-On (SSO/SAML) availability, and SLA guarantees.',
+    goal: 'Navigate to enterprise security and compliance details. Extract vendor name, SOC2 compliance status, SSO/SAML availability, uptime SLA, and verbatim evidence passage. Use null if not disclosed. Return structured JSON.',
     description: 'Automated verification of vendor enterprise readiness, security compliance, and support SLAs.',
+    sampleDecisionCriteria: 'Enterprise Risk Audit: SOC2 certification and SSO support required for enterprise sign-off.',
     schema: {
       type: 'object',
       properties: {
@@ -80,18 +80,19 @@ export const MISSION_PRESETS: MissionPreset[] = [
         },
         sso_supported: { type: 'boolean' },
         sla_guarantee: { type: 'string' },
-        compliance_notes: { type: 'string' }
+        evidence: { type: 'string' }
       },
-      required: ['vendor', 'certifications', 'sso_supported']
+      required: ['vendor', 'sso_supported']
     }
   },
   {
     id: 'github-trending',
-    title: 'Open Source Repo Metrics & Health',
-    category: 'technical',
+    title: 'Open Source Intelligence & Repo Health',
+    category: 'developer',
     url: 'https://github.com/trending',
-    goal: 'Extract the top 3 trending open source repositories today with repository name, language, star count, and description.',
+    goal: 'Extract the top 3 trending open source repositories today. Extract repository name, description, primary language, and stars count. Stop after 3 verified records. Return structured JSON.',
     description: 'Real-time extraction of breakout developer tools and libraries.',
+    sampleDecisionCriteria: 'Technical Adoption Verdict: Prioritize high star velocity and active maintainers.',
     schema: {
       type: 'object',
       properties: {

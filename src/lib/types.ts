@@ -36,11 +36,12 @@ export type TinyFishEvent =
 export interface MissionPreset {
   id: string;
   title: string;
-  category: 'procurement' | 'competitive' | 'technical' | 'career';
+  category: 'procurement' | 'developer' | 'competitive' | 'opportunity';
   url: string;
   goal: string;
   description: string;
   schema: Record<string, any>;
+  sampleDecisionCriteria?: string;
 }
 
 export interface SearchResultItem {
