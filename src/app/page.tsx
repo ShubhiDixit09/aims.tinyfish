@@ -13,6 +13,7 @@ import { ResearchTab } from '@/components/ResearchTab';
 import { CitizenCorner } from '@/components/CitizenCorner';
 import { AffidavitModal } from '@/components/AffidavitModal';
 import { HumanCheckpointBanner } from '@/components/HumanCheckpointBanner';
+import { FloatingChatbot } from '@/components/FloatingChatbot';
 import { MISSION_PRESETS } from '@/lib/presets';
 import { TinyFishEvent } from '@/lib/types';
 import { SAVED_DEMO_RECOVERY } from '@/lib/demoRecovery';
@@ -286,6 +287,13 @@ export default function DashboardPage() {
       <AffidavitModal
         isOpen={isAffidavitOpen}
         onClose={() => setIsAffidavitOpen(false)}
+      />
+
+      {/* Floating Citizen Chatbot Assistant */}
+      <FloatingChatbot
+        onOpenAffidavitModal={() => setIsAffidavitOpen(true)}
+        onNavigateToServices={() => setActiveTab('citizen')}
+        onNavigateToLiveAssistant={() => setActiveTab('cockpit')}
       />
 
       {/* Footer */}
