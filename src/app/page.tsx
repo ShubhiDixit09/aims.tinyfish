@@ -289,8 +289,8 @@ export default function DashboardPage() {
       />
 
       {/* Footer */}
-      <footer className="border-t border-stone-200 py-6 px-6 text-center text-xs text-stone-500 bg-white">
-        CivicPilot AI • Sovereign Indic Citizen Agent • Built on TinyFish Infrastructure • AIMS-DTU Hackathon 2026
+      <footer className="border-t border-[#ECEAE5] py-6 px-6 text-center text-xs text-[#73726E] bg-white">
+        CivicPilot • Government Services & Document Application Assistant • Powered by TinyFish
       </footer>
     </div>
   );

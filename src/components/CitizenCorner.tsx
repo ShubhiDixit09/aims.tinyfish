@@ -122,46 +122,46 @@ export function CitizenCorner({
         </div>
 
         {/* Sub-Navigation Tabs */}
-        <div className="flex items-center gap-1 bg-[#F0EEEA] p-1 rounded-full border border-[#ECEAE5] mt-8 max-w-fit">
+        <div className="flex items-center gap-1 bg-[#F0EEEA]/80 p-1 rounded-full border border-[#ECEAE5] mt-8 max-w-fit">
           <button
             onClick={() => setActiveSubTab('workspace')}
             className={`px-4 py-1.5 rounded-full text-xs transition-all ${
               activeSubTab === 'workspace'
-                ? 'bg-white text-[#191817] shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-semibold'
+                ? 'bg-[#191817] text-white shadow-sm font-semibold'
                 : 'text-[#57544E] hover:text-[#191817] font-medium'
             }`}
           >
-            Application Workspace
+            Overview & Apply
           </button>
           <button
             onClick={() => setActiveSubTab('vault')}
             className={`px-4 py-1.5 rounded-full text-xs transition-all ${
               activeSubTab === 'vault'
-                ? 'bg-white text-[#191817] shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-semibold'
+                ? 'bg-[#191817] text-white shadow-sm font-semibold'
                 : 'text-[#57544E] hover:text-[#191817] font-medium'
             }`}
           >
-            Citizen Vault
+            Saved Details
           </button>
           <button
             onClick={() => setActiveSubTab('drafts')}
             className={`px-4 py-1.5 rounded-full text-xs transition-all ${
               activeSubTab === 'drafts'
-                ? 'bg-white text-[#191817] shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-semibold'
+                ? 'bg-[#191817] text-white shadow-sm font-semibold'
                 : 'text-[#57544E] hover:text-[#191817] font-medium'
             }`}
           >
-            Slips & Receipts
+            Receipts & Slips
           </button>
           <button
             onClick={() => setActiveSubTab('voice')}
             className={`px-4 py-1.5 rounded-full text-xs transition-all ${
               activeSubTab === 'voice'
-                ? 'bg-white text-[#191817] shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-semibold'
+                ? 'bg-[#191817] text-white shadow-sm font-semibold'
                 : 'text-[#57544E] hover:text-[#191817] font-medium'
             }`}
           >
-            Voice Copilot
+            Voice Help (Hindi/Eng)
           </button>
         </div>
       </div>
