@@ -10,12 +10,17 @@ import { TypeGuardPanel } from '@/components/TypeGuardPanel';
 import { SearchRadar } from '@/components/SearchRadar';
 import { MonitorTab } from '@/components/MonitorTab';
 import { ResearchTab } from '@/components/ResearchTab';
+import { CitizenCorner } from '@/components/CitizenCorner';
+import { AffidavitModal } from '@/components/AffidavitModal';
+import { HumanCheckpointBanner } from '@/components/HumanCheckpointBanner';
 import { MISSION_PRESETS } from '@/lib/presets';
 import { TinyFishEvent } from '@/lib/types';
 import { SAVED_DEMO_RECOVERY } from '@/lib/demoRecovery';
 
 export default function DashboardPage() {
-  const [activeTab, setActiveTab] = useState<'cockpit' | 'search' | 'monitors' | 'research'>('cockpit');
+  const [activeTab, setActiveTab] = useState<'citizen' | 'cockpit' | 'search' | 'monitors' | 'research'>('citizen');
+  const [isAffidavitOpen, setIsAffidavitOpen] = useState<boolean>(false);
+  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
 
   // Mission State
   const defaultPreset = MISSION_PRESETS[0];
@@ -158,6 +163,14 @@ export default function DashboardPage() {
     setStepCount(4);
   };
 
+  const handleLaunchLiveAgent = (presetId: string) => {
+    const selected = MISSION_PRESETS.find((p) => p.id === presetId) || MISSION_PRESETS[0];
+    setUrl(selected.url);
+    setGoal(selected.goal);
+    setSchema(JSON.stringify(selected.schema, null, 2));
+    setActiveTab('cockpit');
+  };
+
   const handleSelectUrlForMission = (newUrl: string) => {
     setUrl(newUrl);
     setGoal(`Navigate to this webpage, analyze its core services, features, and pricing details. Provide verbatim evidence quotes. Return as structured JSON.`);
@@ -173,8 +186,26 @@ export default function DashboardPage() {
       />
 
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 lg:p-8">
+        {activeTab === 'citizen' && (
+          <CitizenCorner
+            onOpenAffidavitModal={() => setIsAffidavitOpen(true)}
+            onLaunchLiveAgent={handleLaunchLiveAgent}
+          />
+        )}
+
         {activeTab === 'cockpit' && (
-          <div>
+          <div className="space-y-6">
+            {/* Stage 5 Human-in-the-Loop Approval Checkpoint */}
+            <HumanCheckpointBanner
+              applicantName="Rahul Sharma"
+              portalName="Delhi e-District (edistrict.delhigovt.nic.in)"
+              serviceName="Income Certificate Issuance"
+              annualIncome="₹1,80,000 / year"
+              onApprove={() => setIsAuthorized(true)}
+              onModify={() => setActiveTab('citizen')}
+              isAuthorized={isAuthorized}
+            />
+
             {/* Split Screen Mission Cockpit */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               {/* Left Column: Mission Control & Step Timeline */}
@@ -251,9 +282,15 @@ export default function DashboardPage() {
         )}
       </main>
 
+      {/* Annexure-I Affidavit Modal */}
+      <AffidavitModal
+        isOpen={isAffidavitOpen}
+        onClose={() => setIsAffidavitOpen(false)}
+      />
+
       {/* Footer */}
       <footer className="border-t border-dark-800 py-4 px-6 text-center text-xs font-mono text-slate-500">
-        AquaPulse AI • Built with TinyFish Web Agent Infrastructure • AIMS-DTU Hackathon 2026
+        CivicPilot AI • Built with TinyFish Web Agent Infrastructure • AIMS-DTU BITCAMP 2026 (Track 1: Personal Agents)
       </footer>
     </div>
   );

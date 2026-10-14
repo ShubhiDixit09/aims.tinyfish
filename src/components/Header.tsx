@@ -4,8 +4,8 @@ import React from 'react';
 import { Compass, Globe, Radio, Sparkles, ShieldCheck, Activity } from 'lucide-react';
 
 interface HeaderProps {
-  activeTab: 'cockpit' | 'search' | 'monitors' | 'research';
-  setActiveTab: (tab: 'cockpit' | 'search' | 'monitors' | 'research') => void;
+  activeTab: 'citizen' | 'cockpit' | 'search' | 'monitors' | 'research';
+  setActiveTab: (tab: 'citizen' | 'cockpit' | 'search' | 'monitors' | 'research') => void;
   status: 'ready' | 'running' | 'idle';
 }
 
@@ -23,17 +23,29 @@ export function Header({ activeTab, setActiveTab, status }: HeaderProps) {
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-lg font-bold tracking-tight text-white flex items-center gap-2">
-                AquaPulse <span className="text-xs px-2 py-0.5 rounded-full bg-tinyfish-600/20 text-tinyfish-400 border border-tinyfish-500/30 font-medium">AI AGENT</span>
+                CivicPilot <span className="text-xs px-2 py-0.5 rounded-full bg-tinyfish-600/20 text-tinyfish-400 border border-tinyfish-500/30 font-medium">CIVIC AGENT</span>
               </h1>
             </div>
             <p className="text-xs text-slate-400">
-              Autonomous Web Intelligence & Live Browser Copilot • <span className="text-slate-300">BITCAMP DTU</span>
+              Autonomous Citizen Portal & Errand Copilot • <span className="text-tinyfish-400 font-semibold">DTU Track 1: Personal Agents</span>
             </p>
           </div>
         </div>
 
         {/* Navigation Tabs */}
         <nav className="flex items-center bg-dark-900/90 border border-dark-800 p-1 rounded-xl shadow-inner">
+          <button
+            onClick={() => setActiveTab('citizen')}
+            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
+              activeTab === 'citizen'
+                ? 'bg-tinyfish-600 text-white shadow-md shadow-tinyfish-600/20'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-dark-800/60'
+            }`}
+          >
+            <ShieldCheck className="w-3.5 h-3.5" />
+            Citizen Corner
+          </button>
+
           <button
             onClick={() => setActiveTab('cockpit')}
             className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
@@ -43,7 +55,7 @@ export function Header({ activeTab, setActiveTab, status }: HeaderProps) {
             }`}
           >
             <Radio className="w-3.5 h-3.5" />
-            Mission Cockpit
+            Live Cockpit
           </button>
 
           <button

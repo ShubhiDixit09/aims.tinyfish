@@ -35,7 +35,7 @@ export function MissionControl({
   error,
 }: MissionControlProps) {
   const [showSchema, setShowSchema] = useState(false);
-  const [selectedPresetId, setSelectedPresetId] = useState<string>('db-pricing');
+  const [selectedPresetId, setSelectedPresetId] = useState<string>('edistrict-income');
 
   const handleSelectPreset = (preset: MissionPreset) => {
     setSelectedPresetId(preset.id);

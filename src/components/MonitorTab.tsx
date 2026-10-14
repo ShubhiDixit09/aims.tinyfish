@@ -6,34 +6,34 @@ import { Compass, Clock, Plus, CheckCircle2, AlertCircle, RefreshCw, Bell, Globe
 
 const INITIAL_MONITORS: MonitorItem[] = [
   {
-    id: 'mon-1',
-    name: 'AWS Bedrock LLM Pricing Page',
+    id: 'mon-edistrict',
+    name: 'Delhi e-District: Income Cert Tracker (ED/2026/891240)',
     type: 'page',
-    target: 'https://aws.amazon.com/bedrock/pricing/',
-    schedule: 'Every 24 Hours',
-    lastChecked: '10 mins ago',
-    status: 'active',
-    purpose: 'Alert when new Claude 3.5 or model pricing tiers drop below standard rates.'
-  },
-  {
-    id: 'mon-2',
-    name: 'YCombinator AI Startup Grants',
-    type: 'topic',
-    target: 'YCombinator batch announcements AI winter 2026',
-    schedule: 'Every 12 Hours',
-    lastChecked: '1 hour ago',
-    status: 'changed',
-    purpose: 'Identify new application deadlines or fast-track funding tracks.'
-  },
-  {
-    id: 'mon-3',
-    name: 'OpenAI DevDay Announcements',
-    type: 'page',
-    target: 'https://openai.com/index',
+    target: 'https://edistrict.delhigovt.nic.in/inquire/app-status',
     schedule: 'Every 6 Hours',
+    lastChecked: '4 mins ago',
+    status: 'active',
+    purpose: 'Monitor Tehsildar revenue verification and report certificate generation or clarification requests.'
+  },
+  {
+    id: 'mon-passport',
+    name: 'Passport Seva: Delhi RPO Appointment Slot Radar',
+    type: 'page',
+    target: 'https://www.passportindia.gov.in/AppOnlineProject/online/appointmentAvailability',
+    schedule: 'Every 15 Minutes',
+    lastChecked: '2 mins ago',
+    status: 'changed',
+    purpose: 'Detect new Tatkaal & Normal appointment release dates for ITO and Shalimar Place PSKs.'
+  },
+  {
+    id: 'mon-nsp',
+    name: 'National Scholarship Portal (NSP 2.0) Verification Sentinel',
+    type: 'topic',
+    target: 'NSP Merit-cum-Means verification cutoff dates Delhi colleges 2026',
+    schedule: 'Every 12 Hours',
     lastChecked: 'Just now',
     status: 'baseline',
-    purpose: 'Track changelog diffs on agent APIs and browser tools.'
+    purpose: 'Track institute-level verification deadlines and nodal officer approval milestones.'
   }
 ];
 
@@ -76,9 +76,9 @@ export function MonitorTab() {
             <Compass className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-white">TinyFish Continuous Sentinels</h2>
+            <h2 className="text-base font-bold text-white">CivicPilot 24/7 Sentinels & Application Trackers</h2>
             <p className="text-xs text-slate-400">
-              Scheduled web diff detection and topic radars powered by TinyFish Monitor infrastructure
+              Scheduled web diff detection and government portal tracking powered by TinyFish Monitor infrastructure
             </p>
           </div>
         </div>
